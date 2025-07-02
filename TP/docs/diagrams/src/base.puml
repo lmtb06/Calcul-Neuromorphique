@@ -1,0 +1,43 @@
+@startuml
+
+' class Simulation {
+'     +init()
+'     +pas(deltaPicoSeconde:int)
+' }
+
+struct DonneesNeurone {
+    potentielMembranaireRepos: float
+    potentielMembranaire: float
+    seuilSpike: float
+    capacite: float
+    resistance: float
+    courantEntrant: float
+    picoSecondesDepuisDernierSpike: int
+    spike: bool
+}
+
+enum TypeTravailleur {
+    PROCESSEUR_NEURONE
+}
+
+interface ProcesseurNeurone {
+    +assignerDonnees(dn: DonneesNeurone, deltaPicoSeconde: int)
+    +pasEuler()
+    +pasRK4()
+}
+
+class ProcesseurNeuroneLIF {
+}
+
+ProcesseurNeurone ()- ProcesseurNeuroneLIF
+
+ProcesseurNeuroneLIF o-- DonneesNeurone
+
+class RepartisseurChargeTravail {
+    +repartirTravail()
+    +signalerFinTravail(tt: TypeTravailleur)
+}
+
+
+
+@enduml
