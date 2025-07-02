@@ -1,0 +1,43 @@
+# Tout ignorer par défaut
+/**
+
+# Ne pas ignorer les dossiers (pour pouvoir parcourir la hiérarchie)
+!*/
+
+# Fichiers essentiels du projet
+!**/.gitignore
+!**/README.md
+!**/requirements.txt
+!**/setup.py
+
+# Autoriser les fichiers sources Python
+!**.py
+
+# Autoriser les notebooks Jupyter (si utilisés)
+!**.ipynb
+
+# Autoriser les fichiers PDF
+!**.pdf
+
+# Autoriser les fichiers de données
+!..aedat4
+
+# Autoriser les images
+!**.png
+
+# Autoriser les diagrammes
+!**.puml
+
+# Exclusions spécifiques (fichiers temporaires, sauvegardes, etc.)
+*~
+*.swp
+
+# Dossiers et fichiers générés à ignorer
+**/venv/
+**/env/
+**/build/
+**/dist/
+**.egg-info/
+**/__pycache__/
+**.*py[cod]
+**/*$py.class
