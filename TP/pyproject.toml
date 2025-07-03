@@ -1,0 +1,30 @@
+[project]
+name = "neuromorphic"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Elhadji Moussa FAYE", email = "moussafaye.m@gmail.com" }
+]
+
+requires-python = ">=3.10"
+
+dependencies = [
+    "pyqt6",
+    "matplotlib",
+    "numpy",
+    "networkx",
+    "typing-extensions",
+    "aedat",
+]
+
+[project.scripts]
+neuromorphic = "neuromorphic:main"
+tp1 = "tp1:main"
+tp2 = "tp2:main"
+tp3 = "tp3:main"
+test = "test1:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

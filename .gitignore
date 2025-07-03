@@ -28,6 +28,9 @@
 # Autoriser les diagrammes
 !**.puml
 
+# Autoriser les toml
+!**.toml
+
 # Exclusions spécifiques (fichiers temporaires, sauvegardes, etc.)
 *~
 *.swp
