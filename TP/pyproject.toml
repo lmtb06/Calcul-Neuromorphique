@@ -16,6 +16,7 @@ dependencies = [
     "networkx",
     "typing-extensions",
     "aedat",
+    "tqdm"
 ]
 
 [project.scripts]

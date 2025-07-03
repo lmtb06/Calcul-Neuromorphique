@@ -2,7 +2,7 @@
 
 ' class Simulation {
 '     +init()
-'     +pas(deltaPicoSeconde:int)
+'     +pas(deltaSeconde:int)
 ' }
 
 struct DonneesNeurone {
@@ -12,7 +12,7 @@ struct DonneesNeurone {
     capacite: float
     resistance: float
     courantEntrant: float
-    picoSecondesDepuisDernierSpike: int
+    secondesDepuisDernierSpike: float
     spike: bool
 }
 
@@ -21,7 +21,7 @@ enum TypeTravailleur {
 }
 
 interface ProcesseurNeurone {
-    +assignerDonnees(dn: DonneesNeurone, deltaPicoSeconde: int)
+    +assignerDonnees(dn: DonneesNeurone, deltaSeconde: float)
     +pasEuler()
     +pasRK4()
 }

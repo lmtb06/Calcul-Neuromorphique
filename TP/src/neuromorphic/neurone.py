@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 from typing import Optional, TypeVar
 
 
-from .etat_neurone import DeriveeEtatNeurone, EtatNeurone
-from .integrateur import RK4, Euler, Integrateur
+from etat_neurone import DeriveeEtatNeurone, EtatNeurone
+from integrateur import RK4, Euler, Integrateur
 
 
 class Neurone(ABC):
@@ -121,9 +121,11 @@ if __name__ == "__main__":
     dt: float = 1.0e-2
 
     from time import perf_counter
+    from tqdm import tqdm
+    
     start_time = perf_counter()
 
-    for i in range(1_000_000):
+    for i in tqdm(range(1_000_000), desc="Simulation neurones"):
         # print(f"Neurone Euler: \n\t{neurone1.etat}")
         # print(f"Neurone RK4: \n\t{neurone2.etat}")
         neurone1.updateEuler(dt=dt, I_ext=1.0)
