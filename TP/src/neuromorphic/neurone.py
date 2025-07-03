@@ -3,8 +3,8 @@ from abc import ABC, abstractmethod
 from typing import Optional, TypeVar
 
 
-from etat_neurone import DeriveeEtatNeurone, EtatNeurone
-from integrateur import RK4, Euler, Integrateur
+from .etat_neurone import DeriveeEtatNeurone, EtatNeurone
+from .integrateur import RK4, Euler, Integrateur
 
 
 class Neurone(ABC):
@@ -98,7 +98,7 @@ class LIF(Neurone):
 
         return derivee
 
-if __name__ == "__main__":
+def main():
     # Exemple d'utilisation
     neurone1 = LIF()
     neurone2 = LIF()
@@ -134,3 +134,6 @@ if __name__ == "__main__":
     end_time = perf_counter()
     duration = end_time - start_time
     print(f"L'opération a pris {duration:.4f} secondes.")
+
+if __name__ == "__main__":
+    main()

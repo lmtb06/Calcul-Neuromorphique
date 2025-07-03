@@ -63,7 +63,8 @@ class ProcesseurNeuroneLIF:
             (k1 + 2*k2 + 2*k3 + k4)
 
 
-if __name__ == "__main__":
+
+def main():
     neuronData1 = DonneesNeurone(
         potentielMembranaireRepos=0.0,
         potentielMembranaire=0.0,
@@ -105,3 +106,6 @@ if __name__ == "__main__":
     end_time = perf_counter()
     duration = end_time - start_time
     print(f"L'opération a pris {duration:.4f} secondes.")
+
+if __name__ == "__main__":
+    main()

@@ -20,11 +20,13 @@ dependencies = [
 ]
 
 [project.scripts]
-neuromorphic = "neuromorphic:main"
 tp1 = "tp1:main"
 tp2 = "tp2:main"
 tp3 = "tp3:main"
-test = "test1:main"
+test = "test:main"
+test1 = "test1:main"
+neurone_old = "neuromorphic.neurone:main"
+neurone_new = "neuromorphic_v2.neuron:main"
 
 [build-system]
 requires = ["hatchling"]
