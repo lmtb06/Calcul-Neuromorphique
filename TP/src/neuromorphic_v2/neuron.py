@@ -27,7 +27,7 @@ class ProcesseurNeuroneLIF:
         if self.dn.picoSecondesDepuisDernierSpike is not None:
             self.dn.picoSecondesDepuisDernierSpike += deltaPicoSeconde
 
-    def deltaPotentiel(self) -> float:
+    def deltaPotentiel(dn: DonneesNeurone) -> float:
         tau = (dn.resistance * dn.capacite)
         diffPotentiel = dn.potentielMembranaire - \
             dn.potentielMembranaireRepos
@@ -35,31 +35,31 @@ class ProcesseurNeuroneLIF:
                  dn.courantEntrant) - diffPotentiel) / tau
         return delta
 
-    def processSpikeBehavior(self) -> None:
+    def processSpikeBehavior(dn: DonneesNeurone) -> None:
         if dn.potentielMembranaire > dn.seuilSpike:
             dn.spike = True
             dn.picoSecondesDepuisDernierSpike=0
             dn.potentielMembranaire = dn.potentielMembranaireRepos
 
     def stepEuler(self) -> None:
-        ProcesseurNeuroneLIF.processSpikeBehavior(dn)
+        ProcesseurNeuroneLIF.processSpikeBehavior(self.dn)
 
-        dn.potentielMembranaire += deltaSeconde * \
-            ProcesseurNeuroneLIF.deltaPotentiel(dn)
+        self.dn.potentielMembranaire += (self.deltaPicoSeconde/1e-12) * \
+            ProcesseurNeuroneLIF.deltaPotentiel(self.dn)
 
     def stepRK4(self) -> None:
-        ProcesseurNeuroneLIF.processSpikeBehavior(dn)
-        tempNeuronData = replace(dn)
-        k1 = ProcesseurNeuroneLIF.deltaPotentiel(dn)
-        tempNeuronData.potentielMembranaire += (deltaSeconde * k1)/2
+        ProcesseurNeuroneLIF.processSpikeBehavior(self.dn)
+        tempNeuronData = replace(self.dn)
+        k1 = ProcesseurNeuroneLIF.deltaPotentiel(self.dn)
+        tempNeuronData.potentielMembranaire += ((self.deltaPicoSeconde/1e-12) * k1)/2
         k2 = ProcesseurNeuroneLIF.deltaPotentiel(tempNeuronData)
-        tempNeuronData.potentielMembranaire = dn.potentielMembranaire + \
-            (deltaSeconde * k2)/2
+        tempNeuronData.potentielMembranaire = self.dn.potentielMembranaire + \
+            ((self.deltaPicoSeconde/1e-12) * k2)/2
         k3 = ProcesseurNeuroneLIF.deltaPotentiel(tempNeuronData)
-        tempNeuronData.potentielMembranaire = dn.potentielMembranaire + \
-            (deltaSeconde * k3)
+        tempNeuronData.potentielMembranaire = self.dn.potentielMembranaire + \
+            ((self.deltaPicoSeconde/1e-12) * k3)
         k4 = ProcesseurNeuroneLIF.deltaPotentiel(tempNeuronData)
-        dn.potentielMembranaire += (deltaSeconde / 6) * \
+        self.dn.potentielMembranaire += ((self.deltaPicoSeconde/1e-12) / 6) * \
             (k1 + 2*k2 + 2*k3 + k4)
 
 
@@ -84,7 +84,12 @@ if __name__ == "__main__":
         picoSecondesDepuisDernierSpike=None,
         spike=False
     )
-    dt: float = 1.0e-2
+    dt: float = 1.0e-2 * 1e12
+
+    processor1 = ProcesseurNeuroneLIF()
+    processor1.assignerDonnees(neuronData1, dt)
+    processor2 = ProcesseurNeuroneLIF()
+    processor2.assignerDonnees(neuronData2, dt)
 
     from time import perf_counter
     start_time = perf_counter()
@@ -92,8 +97,8 @@ if __name__ == "__main__":
     for i in range(1_000_000):
         # print(f"Neurone Euler: \n\t{neuronData1}")
         # print(f"Neurone RK4: \n\t{neuronData2}")
-        ProcesseurNeuroneLIF.stepEuler(neuronData1, dt)
-        ProcesseurNeuroneLIF.stepRK4(neuronData2, dt)
+        processor1.stepEuler()
+        processor2.stepRK4()
 
     end_time = perf_counter()
     duration = end_time - start_time
